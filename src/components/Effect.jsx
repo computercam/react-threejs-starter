@@ -1,3 +1,4 @@
+https://github.com/pmndrs/react-three-fiber/discussions/389
 import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
