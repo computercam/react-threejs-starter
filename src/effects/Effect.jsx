@@ -4,12 +4,13 @@ import { useEffect, useMemo } from 'react';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
-import { DotScreenShader } from '../shaders/DotScreenShader';
+import noiseScreen from '../shaders/noiseScreen';
 
 
 export default function Effect({
-  shaders = [DotScreenShader]
+  shaders = [noiseScreen]
 }) {
+  console.log(noiseScreen)
   const { gl, scene, camera, size } = useThree()
 
   const composer = useMemo(() => 

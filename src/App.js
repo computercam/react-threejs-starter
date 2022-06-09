@@ -2,9 +2,10 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect } from 'react';
 import { DoubleSide, Euler, MathUtils } from 'three';
 import './App.css';
-import CameraControls from './components/CameraControls';
-import Effect from './components/Effect';
-import PointLight from './components/PointLight';
+import CameraControls from './controls/CameraControls';
+import Effect from './effects/Effect';
+import PointLight from './lights/PointLight';
+import Sphere from './meshes/Sphere';
 
 function App() {
   const box = React.useRef()
@@ -23,7 +24,7 @@ function App() {
       >
         <PointLight />
         <CameraControls />
-        
+        <Sphere />
         <mesh ref={box} castShadow={true}>
           <boxGeometry args={[1, 1, 1]} />
           <meshPhongMaterial color={'rgb(155, 155, 155)'} />
