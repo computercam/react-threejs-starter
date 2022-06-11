@@ -1,15 +1,9 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import React, { useEffect } from 'react';
-import { DoubleSide, Euler, MathUtils } from 'three';
+import { Canvas } from '@react-three/fiber';
 import './App.css';
-import CameraControls from './controls/CameraControls';
-import Effect from './effects/Effect';
-import PointLight from './lights/PointLight';
-import Sphere from './meshes/Sphere';
+import ShaderBlob from './scenes/ShaderBlob';
+
 
 function App() {
-  const box = React.useRef()
-  
   return (
     <div className="App">
       <Canvas 
@@ -17,23 +11,9 @@ function App() {
         onCreated={(state) => {
           state.gl.shadowMap.enabled = true
           state.gl.setClearColor('rgb(205, 205, 205)')
-          state.camera.lookAt(box.current.position.x, box.current.position.y, box.current.position.z)
-          
-          box.current.position.y += box.current.geometry.parameters.height * 0.5
         }}
       >
-        <PointLight />
-        <CameraControls />
-        <Sphere />
-        <mesh ref={box} castShadow={true}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshPhongMaterial color={'rgb(155, 155, 155)'} />
-        </mesh>
-        <mesh rotation-x={MathUtils.degToRad(90)} receiveShadow={true}>
-          <planeGeometry args={[5, 5]} />
-          <meshPhongMaterial color={'rgb(125, 125, 125)'} side={DoubleSide}/>
-        </mesh>
-        <Effect />
+        <ShaderBlob />
       </Canvas>
     </div>
   );

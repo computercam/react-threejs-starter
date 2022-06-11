@@ -1,31 +1,32 @@
-import raw from 'raw.macro';
+import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 import { BackSide } from "three";
-const fragmentShader = raw('../shaders/sphere/fragment.glsl');
-const vertexShader = raw('../shaders/sphere/vertex.glsl');
+import SphereShader from "../shaders/Sphere";
 
+const  {
+  fragmentShader,
+  uniforms,
+  vertexShader
+} = SphereShader
 
-export default function SphereMaterial({ 
-  colors = [
-    [255 / 255, 255 / 255, 229 / 255],
-    [255 / 255, 113 / 255, 66 / 255],
-    [61 / 255, 66 / 255, 148 / 255]
-  ]
-}) {
-  console.log(fragmentShader)
-  console.log(vertexShader)
+export default function SphereMaterial() {
+  const material = useRef()
+
+  useFrame(({ clock }) => {
+    material
+      .current
+      .uniforms
+      .uTime
+      .value = clock.getElapsedTime() * 0.6
+  })
+  
   return (
-    <shaderMaterial 
+    <shaderMaterial
+      ref={material}
       side={BackSide}
       vertexShader={vertexShader}
       fragmentShader={fragmentShader}
-      uniforms={{
-        uTime: { value: 0 },
-        uColor1: { value: colors[0] },
-        uColor2: { value: colors[1] },
-        uColorAccent: { value: colors[2] },
-      }}
-      wireframe={false}
+      uniforms={uniforms}
     />
   )
 }
-  

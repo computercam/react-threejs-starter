@@ -4,33 +4,25 @@ import { useEffect, useMemo } from 'react';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
-import noiseScreen from '../shaders/noiseScreen';
+import noiseScreen from '../shaders/NoiseScreen';
 
-
-export default function Effect({
-  shaders = [noiseScreen]
-}) {
-  console.log(noiseScreen)
+export default function NoiseScreen() {
   const { gl, scene, camera, size } = useThree()
 
   const composer = useMemo(() => 
     new EffectComposer(gl), [gl])
     
   const renderPass = useMemo(() => 
-    new RenderPass(scene, camera), [scene,camera])
+    new RenderPass(scene, camera), [scene, camera])
   
-  const shaderPasses = useMemo(() => 
-    shaders.map(shader => 
-      new ShaderPass(shader)), [shaders])
+  const shaderPass = useMemo(() => 
+    new ShaderPass(noiseScreen), [])
 
   useEffect(() => {
-    composer.addPass(renderPass)
-
-    shaderPasses.forEach(shaderPass => 
-      composer.addPass(shaderPass))
-      
     composer.setSize(size.width, size.height)
-  }, [composer, renderPass, shaderPasses, size])
+    composer.addPass(renderPass)
+    composer.addPass(shaderPass)
+  }, [composer, renderPass, shaderPass, size])
 
   return useFrame(() => composer.render(), 1)
 }

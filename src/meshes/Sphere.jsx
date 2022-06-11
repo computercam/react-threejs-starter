@@ -1,9 +1,13 @@
-import SphereMaterial from "../materials/SphereMaterial"
+import { useRef } from 'react';
+import SphereMaterial from "../materials/SphereMaterial";
 
-export default function Sphere () {
+export default function Sphere ({ 
+  scale = 10
+}) {
+  const sphere = useRef()
   return (
-    <mesh>
-      <sphereBufferGeometry args={[1, 32, 32]} />
+    <mesh scale={scale} ref={sphere}>
+      <sphereBufferGeometry args={[1, 32, 32]}/>
       <SphereMaterial />
     </mesh>
   )
